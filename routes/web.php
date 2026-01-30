@@ -13,19 +13,31 @@ use App\Http\Controllers\IkuSdmoController;
 
 // Root route - redirect ke dashboard atau login
 Route::get('/', function () {
-    // Debug info untuk Railway
-    if (request()->has('debug') && env('APP_DEBUG')) {
-        return response()->json([
-            'php_version' => phpversion(),
-            'laravel_version' => app()->version(),
-            'app_env' => env('APP_ENV'),
-            'app_key_set' => env('APP_KEY') ? 'Yes' : 'No',
-            'db_connection' => env('DB_CONNECTION'),
-            'db_host' => env('DB_HOST'),
-        ]);
+    try {
+        // Test database connection
+        \DB::connection()->getPdo();
+        $dbStatus = 'Connected';
+    } catch (\Exception $e) {
+        $dbStatus = 'Error: ' . $e->getMessage();
     }
     
-    return redirect()->route('login');
+    return response()->json([
+        'status' => 'Laravel is running',
+        'php_version' => phpversion(),
+        'laravel_version' => app()->version(),
+        'app_env' => env('APP_ENV'),
+        'app_key_set' => env('APP_KEY') ? 'Yes' : 'No',
+        'app_key_length' => env('APP_KEY') ? strlen(env('APP_KEY')) : 0,
+        'db_connection' => env('DB_CONNECTION'),
+        'db_host' => env('DB_HOST'),
+        'db_status' => $dbStatus,
+        'storage_writable' => is_writable(storage_path()),
+        'cache_writable' => is_writable(storage_path('framework/cache')),
+    ]);
+});
+
+Route::get('/test', function () {
+    return 'Laravel is working!';
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
