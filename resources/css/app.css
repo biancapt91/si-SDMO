@@ -1,0 +1,40 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+<style>
+.career-sidebar {
+    width: 240px;
+    background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e6e6e6;
+}
+
+.sidebar-menu .sidebar-link {
+    display: block;
+    padding: 10px 14px;
+    border-radius: 6px;
+    color: #333;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.sidebar-menu .sidebar-link:hover {
+    background: #f3f7ff;
+    color: #0d6efd;
+}
+
+.sidebar-menu .active {
+    background: #0d6efd;
+    color: white !important;
+}
+</style>
+
