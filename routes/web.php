@@ -13,6 +13,18 @@ use App\Http\Controllers\IkuSdmoController;
 
 // Root route - redirect ke dashboard atau login
 Route::get('/', function () {
+    // Debug info untuk Railway
+    if (request()->has('debug') && env('APP_DEBUG')) {
+        return response()->json([
+            'php_version' => phpversion(),
+            'laravel_version' => app()->version(),
+            'app_env' => env('APP_ENV'),
+            'app_key_set' => env('APP_KEY') ? 'Yes' : 'No',
+            'db_connection' => env('DB_CONNECTION'),
+            'db_host' => env('DB_HOST'),
+        ]);
+    }
+    
     return redirect()->route('login');
 });
 
