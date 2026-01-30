@@ -11,6 +11,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\IkuSdmoController;
 
+// Root route - redirect ke dashboard atau login
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
